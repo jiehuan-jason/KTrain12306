@@ -1,0 +1,66 @@
+﻿<Page
+    x:Class="KTrain12306.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KTrain12306"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+           IsPaneOpen="False" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="CompactInline">
+        <SplitView.Pane>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="NavLinksList" Margin="0,12,0,0" SelectionMode="Single" Grid.Row="1" VerticalAlignment="Stretch"
+                    ItemClick="NavLinksList_ItemClick"  IsItemClickEnabled="True">
+                    <StackPanel x:Name="menu" Orientation="Horizontal" Grid.Row="0" Margin="0,25,0,24" >
+                        <SymbolIcon Symbol="More"  HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" />
+                        <TextBlock Text="菜单" Margin="24,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="home" Orientation="Horizontal" Grid.Row="0" Margin="0,25,0,24" >
+                        <SymbolIcon Symbol="Home"  HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" />
+                        <TextBlock Text="主页" Margin="24,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="time" Orientation="Horizontal" Grid.Row="0" Margin="0,5,0,24" >
+                        <SymbolIcon Symbol="Clock"  HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" />
+                        <TextBlock Text="开售时间" Margin="24,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListView>
+            </Grid>
+        </SplitView.Pane>
+
+
+        <StackPanel x:Name="body">
+            <StackPanel x:Name="head" Orientation="Horizontal">
+
+                <TextBlock x:Name="title" Text="KTrain" FontSize="80" Margin="10,-10,0,0" Height="114" />
+            </StackPanel>
+            <Grid x:Name="choose_part"  HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button x:Name="from" Background="#00000000" Content="香港西九龙" Click="From_Click" FontSize="20"/>
+                <Button Grid.Column="1" x:Name="change" Background="#00000000" Content="&#x21C0;" Click="Change_Click" FontSize="30"/>
+                <Button Grid.Column="2" x:Name="to" Background="#00000000" Content="香港西九龙" Click="To_Click"  FontSize="20"/>
+                
+            </Grid>
+            <StackPanel>
+                <CalendarDatePicker x:Name="calendar" HorizontalAlignment="Center" Grid.Row="1" PlaceholderText="选择日期"/>
+                <Button x:Name="search" Content="查询" Click="Search_Click" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </SplitView>
+</Page>
