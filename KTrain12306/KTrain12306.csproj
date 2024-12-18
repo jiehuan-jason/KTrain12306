@@ -130,6 +130,9 @@
     <Compile Include="StationQueryInfo.cs" />
     <Compile Include="StationUtils.cs" />
     <Compile Include="TrainInfo.cs" />
+    <Compile Include="TrainsListPage.xaml.cs">
+      <DependentUpon>TrainsListPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -157,6 +160,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="StationChoosePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TrainsListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
