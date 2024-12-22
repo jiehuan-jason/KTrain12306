@@ -77,6 +77,8 @@ namespace KTrain12306
         public string wz_price { get; set; }
         public string add_day_display { get; set; }
 
+        public List<SeatData> SeatDatas { set; get; }
+
         public TrainInfo(String json)
         {
             
@@ -85,6 +87,7 @@ namespace KTrain12306
         public static TrainInfo GetTrainInfo(String json)
         {
             var info = JsonConvert.DeserializeObject<TrainInfo>(json);
+            info.SeatDatas = SeatData.GetSeatDatas(info);
             info.init_add_day_display();
             return info;
         }
