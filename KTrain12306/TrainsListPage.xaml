@@ -7,19 +7,59 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
+    <Grid Margin="0,10,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-
-        <StackPanel Margin="0,10,0,10">
-            <TextBlock Text="上海松江-上海虹桥" FontSize="40" Margin="10,10,10,10"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <CalendarDatePicker x:Name="calendar" HorizontalAlignment="Center" Grid.Row="1" PlaceholderText="选择日期" Margin="10,0,0,0"/>
-                <Button Content="查询" FontSize="15" Margin="10,0,0,0"/>
-            </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
+            <TextBlock x:Name="title" Text="上海松江-上海虹桥" FontSize="40" Margin="10,10,10,10" />
         </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+            <CalendarDatePicker x:Name="calendar" HorizontalAlignment="Center" Grid.Row="1" PlaceholderText="选择日期" Margin="10,0,0,0" />
+            <Button x:Name="search" Content="查询" FontSize="15" Margin="10,0,0,0" Click="Search_Click"/>
+        </StackPanel>
+        <ProgressRing x:Name="LoadingRing" IsActive="False" Width="100" Height="100"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListView x:Name="train_list" Grid.Row="2" HorizontalAlignment="Stretch" SelectionMode="Single" IsItemClickEnabled="False"
+                   Margin="10,10,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch" Width="300">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <!-- 动态伸缩 -->
+                            <ColumnDefinition  />
+                            <!-- 动态伸缩 -->
+                            <ColumnDefinition Width="70"/>
+                            <!-- 动态伸缩 -->
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding station_train_code}" FontSize="20" />
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment ="Left" >
+                            <TextBlock Text="{Binding from_station_name}" FontSize="17"/>
+                            <TextBlock Text="{Binding start_time}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding lishi}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right">
+                            <TextBlock Text="{Binding to_station_name}" HorizontalAlignment="Right" FontSize="17"/>
+                            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding arrive_time}" />
+                                <TextBlock Text="{Binding add_day_display}" FontSize="9"/>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

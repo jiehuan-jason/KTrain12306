@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,12 +37,19 @@ namespace KTrain12306
             this.InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Enabled;
 
+            LoadingRing.IsActive = true;
+            LoadingRing.Visibility = Visibility.Visible;
+
+            StationUtils.getStationsDataFromWeb();
+
             calendar = setDatePickerRange(calendar);
-            calendar.Date = DateTime.Now;
+            calendar.Date = DateTime.Today;
             from_station = new StationInfo("bji|北京|BJP|beijing|bj|2|0357|北京|||");
             to_station = new StationInfo("sha|上海|SHH|shanghai|sh|13|0712|上海|||");
             from.Content = from_station.station_name;
             to.Content = to_station.station_name;
+            LoadingRing.IsActive = false;
+            LoadingRing.Visibility = Visibility.Collapsed;
             /*LoadingRing.IsActive = true;
             LoadingRing.Visibility = Visibility.Visible;
             button.Visibility = Visibility.Collapsed;
@@ -67,66 +75,6 @@ namespace KTrain12306
             if (!isExist)
                 StationUtils.getStationsDataFromWeb();
             stations = await StationUtils.getStationInfoArray();
-        }
-
-        private async void OnRequestButtonClick(object sender, RoutedEventArgs e)
-        {
-            //LoadingRing.IsActive = true;
-            //LoadingRing.Visibility = Visibility.Visible;
-            /*// 获取明天的日期
-            string tomorrowDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-            // 第一步：请求 www.12306.cn 获取基础的 Cookies
-            string url12306 = "https://www.12306.cn";
-            var client = new HttpClient();
-            HttpResponseMessage response12306 = await client.GetAsync(new Uri(url12306));
-
-            // 获取并存储 www.12306.cn 的 Cookies
-            var cookies12306 = GetCookies(response12306);
-
-            // 第二步：请求第一个 URL，并带上从 www.12306.cn 获取的 Cookies
-            string url1 = $"https://kyfw.12306.cn/otn/leftTicket/init?linktypeid=dc&fs=%E6%9D%AD%E5%B7%9E%E4%B8%9C,HGH&ts=%E9%BB%84%E5%B1%B1%E5%8C%97,NYH&date={tomorrowDate}&flag=N,N,Y";
-            var client1 = new HttpClient();
-            AddCookiesToRequest(client1, cookies12306); // 将 www.12306.cn 的 Cookies 放入请求头
-            HttpResponseMessage response1 = await client1.GetAsync(new Uri(url1));
-
-            // 获取并存储第一个请求返回的 Cookies
-            var cookies1 = GetCookies(response1);
-
-            // 第三步：将 www.12306.cn 和 第一个请求的 Cookies 一起放入第二个请求，同时伪装成 Chrome 浏览器
-            string url2 = $"https://kyfw.12306.cn/otn/leftTicket/queryO?leftTicketDTO.train_date={tomorrowDate}&leftTicketDTO.from_station=HGH&leftTicketDTO.to_station=NGH&purpose_codes=ADULT";
-            var client2 = new HttpClient();
-            var allCookies = cookies12306.Concat(cookies1).ToList(); // 合并两个请求的 Cookies
-            AddCookiesToRequest(client2, allCookies); // 将所有 Cookies 放入第二个请求头
-
-            // 伪装成最新版本的 Chrome 浏览器
-            AddUserAgent(client2);
-
-            // 发送第二个请求
-            HttpResponseMessage response2 = await client2.GetAsync(new Uri(url2));
-
-            // 获取第二个请求的响应内容
-            string result2 = await response2.Content.ReadAsStringAsync();*/
-
-            /*string htmlSource = await webview.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML" });
-            var htmlDoc = new XmlDocument();
-
-            try
-            {
-                // 将 HTML 字符串加载到 XmlDocument 中
-                htmlDoc.LoadXml(htmlSource);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine( $"Error loading HTML: {ex.Message}");
-            }
-
-            // 查找 <pub> 标签
-            var pubElements = htmlDoc.GetElementsByTagName("pre");
-            // 显示返回结果
-            responseTextBlock.Text = $"请求结果 2:\n{pubElements[0].InnerText}";
-            LoadingRing.IsActive = false;
-            LoadingRing.Visibility = Visibility.Collapsed;*/
         }
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
@@ -170,43 +118,17 @@ namespace KTrain12306
 
         private async void Search_Click(object sender, RoutedEventArgs e)
         {
-            //Create an HTTP client object
-            Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
+            LoadingRing.IsActive = true;
+            LoadingRing.Visibility = Visibility.Visible;
+            DateTimeOffset dateTimeOffset = (DateTimeOffset)calendar.Date;
+            TrainsListData list_data = await TrainsListData.init(from_station, to_station, dateTimeOffset.DateTime);
+            LoadingRing.IsActive = false;
+            LoadingRing.Visibility = Visibility.Collapsed;
+            if (list_data.trains_list.Count != 0)
+                Frame.Navigate(typeof(TrainsListPage), list_data);
+            else
+                ShowNoTrainsDialog();
 
-            //Add a user-agent header to the GET request. 
-            var headers = httpClient.DefaultRequestHeaders;
-
-            //The safe way to add a header value is to use the TryParseAdd method and verify the return value is true,
-            //especially if the header value is coming from user input.
-            string header = "ie";
-            if (!headers.UserAgent.TryParseAdd(header))
-            {
-                throw new Exception("Invalid header value: " + header);
-            }
-
-            header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header))
-            {
-                throw new Exception("Invalid header value: " + header);
-            }
-
-            Uri requestUri = new Uri("https://kyfw.12306.cn/otn/leftTicketPrice/query?leftTicketDTO.train_date="+ calendar.Date.Value.ToString("yyyy-MM-dd") + "&leftTicketDTO.from_station="+from_station.station_telecode+ "&leftTicketDTO.to_station="+ to_station.station_telecode + "&leftTicketDTO.ticket_type=1&randCode=");
-
-            //Send the GET request asynchronously and retrieve the response as a string.
-            Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
-            string httpResponseBody = "";
-
-            try
-            {
-                //Send the GET request
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
-                httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex)
-            {
-                httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
-            }
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -260,6 +182,16 @@ isContent = true;
             calendarDatePicker.MinDate = DateTime.Now;
             calendarDatePicker.MaxDate = DateTime.Now.AddDays(15 - 1);
             return calendarDatePicker;
+        }
+
+        private async void ShowNoTrainsDialog()
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.Title = "没有查询到列车";
+            dialog.CloseButtonText = "OK";
+            dialog.Content = "很抱歉，没有查询到"+calendar.Date.Value.ToString("yyyy-MM-dd")+"由 "+from_station.station_name+" 到 "+to_station.station_name+" 的列车！";
+
+            var result = await dialog.ShowAsync();
         }
     }
     

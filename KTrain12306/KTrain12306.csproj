@@ -130,6 +130,7 @@
     <Compile Include="StationQueryInfo.cs" />
     <Compile Include="StationUtils.cs" />
     <Compile Include="TrainInfo.cs" />
+    <Compile Include="TrainsListData.cs" />
     <Compile Include="TrainsListPage.xaml.cs">
       <DependentUpon>TrainsListPage.xaml</DependentUpon>
     </Compile>

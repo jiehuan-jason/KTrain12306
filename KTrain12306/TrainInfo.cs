@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,11 +75,26 @@ namespace KTrain12306
         public string edrz_num { get; set; }
         public string edrz_price { get; set; }
         public string wz_price { get; set; }
-
+        public string add_day_display { get; set; }
 
         public TrainInfo(String json)
         {
+            
+        }
 
+        public static TrainInfo GetTrainInfo(String json)
+        {
+            var info = JsonConvert.DeserializeObject<TrainInfo>(json);
+            info.init_add_day_display();
+            return info;
+        }
+
+        private void init_add_day_display()
+        {
+            if (day_difference == 0)
+                add_day_display = "";
+            else
+                add_day_display = "+" + day_difference;
         }
     }
 }

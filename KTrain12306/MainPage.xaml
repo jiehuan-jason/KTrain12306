@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-           IsPaneOpen="False" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="CompactInline">
+           IsPaneOpen="False" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="CompactOverlay">
         <SplitView.Pane>
             <Grid>
                 <Grid.RowDefinitions>
@@ -52,15 +52,18 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Button x:Name="from" Background="#00000000" Content="香港西九龙" Click="From_Click" FontSize="20"/>
+                <Button x:Name="from" Background="#00000000" HorizontalAlignment="Right" Content="香港西九龙" Click="From_Click" FontSize="20"/>
                 <Button Grid.Column="1" x:Name="change" Background="#00000000" Content="&#x21C0;" Click="Change_Click" FontSize="30"/>
-                <Button Grid.Column="2" x:Name="to" Background="#00000000" Content="香港西九龙" Click="To_Click"  FontSize="20"/>
+                <Button Grid.Column="2" x:Name="to" HorizontalAlignment="Left"  Background="#00000000" Content="香港西九龙" Click="To_Click"  FontSize="20"/>
                 
             </Grid>
             <StackPanel>
                 <CalendarDatePicker x:Name="calendar" HorizontalAlignment="Center" Grid.Row="1" PlaceholderText="选择日期"/>
                 <Button x:Name="search" Content="查询" Click="Search_Click" HorizontalAlignment="Center" Margin="0,10,0,0"/>
             </StackPanel>
+            <ProgressRing x:Name="LoadingRing" IsActive="False" Width="100" Height="100"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
+        
     </SplitView>
 </Page>
