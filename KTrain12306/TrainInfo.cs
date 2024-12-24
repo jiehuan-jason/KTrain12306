@@ -87,7 +87,7 @@ namespace KTrain12306
         public static TrainInfo GetTrainInfo(String json)
         {
             var info = JsonConvert.DeserializeObject<TrainInfo>(json);
-            info.SeatDatas = SeatData.GetSeatDatas(info);
+            //info.SeatDatas = SeatData.GetSeatDatas(info,new_content);
             info.init_add_day_display();
             return info;
         }

@@ -41,13 +41,19 @@ namespace KTrain12306
 
                 var result = new List<TrainInfo>();
 
-                String content_new = await TrainsListData.GetFromNewAPI();
+                String content_new = await GetFromNewAPI();
                 
                 var newjsonObj = JObject.Parse(content_new);
                 var newdataArray = (JArray)newjsonObj["data"]["result"];
                 
                 List<string> newResult = newdataArray.ToObject<List<string>>();
+                List<string[]> resultAfterSplit = new List<string[]>();
 
+                foreach(var item in newResult)
+                {
+                    var split = item.Split('|');
+                    resultAfterSplit.Add(split);
+                }
                 // 遍历 data 数组
                 foreach (var item in dataArray)
                 {
@@ -55,14 +61,23 @@ namespace KTrain12306
                     if (queryLeftNewDTO != null)
                     {
                         var info = TrainInfo.GetTrainInfo(queryLeftNewDTO.ToString());
-                        if(date.Date == DateTime.Today)
+
+
+                        if (date.Date == DateTime.Today)
                         {
-                            if(TimeSpan.Parse(info.start_time) > DateTime.Now.TimeOfDay)
+                            if (TimeSpan.Parse(info.start_time) > DateTime.Now.TimeOfDay)
                             {
+                                string[] new_obj = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
+                                info.SeatDatas = SeatData.GetSeatDatas(info, new_obj);
                                 result.Add(info);
                             }
-                        }else
+                        }
+                        else
+                        {
+                            string[] new_obj = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
+                            info.SeatDatas = SeatData.GetSeatDatas(info, new_obj);
                             result.Add(info);
+                        }
                             
 
                     }
@@ -111,7 +126,7 @@ namespace KTrain12306
             return httpResponseBody;
         }
 
-        public static async Task<String> GetFromNewAPI()
+        public async Task<String> GetFromNewAPI()
         {
             string todayDate = DateTime.Now.ToString("yyyy-MM-dd");
             string initUrl = $"https://kyfw.12306.cn/otn/leftTicket/init?linktypeid=dc&fs=%E6%9D%AD%E5%B7%9E%E4%B8%9C,HGH&ts=%E5%AE%81%E6%B3%A2,NGH&date={todayDate}&flag=N,N,Y";
@@ -129,8 +144,9 @@ namespace KTrain12306
 
                 if (initResponse.IsSuccessStatusCode)
                 {
+                    var date_string = date.ToString("yyyy-MM-dd");
                     // 如果初始化页面请求成功，可以继续获取第二个 API
-                    string apiUrl = "https://kyfw.12306.cn/otn/leftTicket/queryO?leftTicketDTO.train_date=2024-12-23&leftTicketDTO.from_station=BJP&leftTicketDTO.to_station=SHH&purpose_codes=ADULT"; // 替换为实际的 API 地址
+                    string apiUrl = $"https://kyfw.12306.cn/otn/leftTicket/queryO?leftTicketDTO.train_date={date_string}&leftTicketDTO.from_station={from_station.station_telecode}&leftTicketDTO.to_station={to_station.station_telecode}&purpose_codes=ADULT"; // 替换为实际的 API 地址
                     var apiResponse = await client.GetAsync(apiUrl);
 
                     if (apiResponse.IsSuccessStatusCode)

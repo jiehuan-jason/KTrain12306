@@ -10,7 +10,7 @@ Windows 11 22635
 
 Windows 10 Mobile 15254
 
-开发环境：VSCode 2017
+开发环境：VS 2017
 
 ### TODO
 
