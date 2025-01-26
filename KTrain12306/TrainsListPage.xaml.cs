@@ -139,5 +139,10 @@ namespace KTrain12306
             LoadingRing.IsActive = false;
             LoadingRing.Visibility = Visibility.Collapsed;
         }
+
+        private void Train_list_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(TrainInfoPage), e.ClickedItem);
+        }
     }
 }

@@ -36,8 +36,8 @@
                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <ListView x:Name="train_list" Grid.Row="3" HorizontalAlignment="Stretch" SelectionMode="Single" IsItemClickEnabled="False"
-                   Margin="10,10,0,0">
+        <ListView x:Name="train_list" Grid.Row="3" HorizontalAlignment="Stretch" SelectionMode="Single" IsItemClickEnabled="True"
+                   Margin="10,10,0,0" ItemClick="Train_list_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:TrainInfo">
                     <Grid HorizontalAlignment="Stretch" Width="300">

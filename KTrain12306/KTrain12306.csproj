@@ -131,6 +131,9 @@
     <Compile Include="StationQueryInfo.cs" />
     <Compile Include="StationUtils.cs" />
     <Compile Include="TrainInfo.cs" />
+    <Compile Include="TrainInfoPage.xaml.cs">
+      <DependentUpon>TrainInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TrainsListData.cs" />
     <Compile Include="TrainsListPage.xaml.cs">
       <DependentUpon>TrainsListPage.xaml</DependentUpon>
@@ -140,7 +143,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="KTrain12306_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LargeTile.scale-100.png" />
@@ -201,6 +203,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="StationChoosePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TrainInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
