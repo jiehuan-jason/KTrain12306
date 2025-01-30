@@ -68,8 +68,12 @@ namespace KTrain12306
                             if (TimeSpan.Parse(info.start_time) > DateTime.Now.TimeOfDay)
                             {
                                 string[] new_obj = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
-                                info.SeatDatas = SeatData.GetSeatDatas(info, new_obj);
-                                result.Add(info);
+                                if (new_obj != null)
+                                {
+                                    info.SeatDatas = SeatData.GetSeatDatas(info, new_obj);
+                                    result.Add(info);
+                                }
+                                
                             }
                         }
                         else

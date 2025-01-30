@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -116,29 +117,56 @@ namespace KTrain12306
             refresh(list_data);
         }
 
-        private void refresh(TrainsListData list_data)
+        private async void refresh(TrainsListData list_data)
         {
+            // 在主线程启动加载圈
             LoadingRing.IsActive = true;
             LoadingRing.Visibility = Visibility.Visible;
-            List<TrainInfo> list = list_data.trains_list;
-            title.Text = list_data.from_station.station_name + "-" + list_data.to_station.station_name;
-            calendar.Date = list_data.date;
-            data.Clear();
-            if (list.Count != 0)
-            {
 
-                foreach (var info in list)
-                {
-                    data.Add(info);
-                }
-            }
-            else
+            await Task.Run(() =>
             {
-                Debug.WriteLine("No Trains");
-            }
-            LoadingRing.IsActive = false;
-            LoadingRing.Visibility = Visibility.Collapsed;
+                List<TrainInfo> list = list_data.trains_list;
+
+                // 使用 Dispatcher 更新 UI
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    title.Text = list_data.from_station.station_name + "-" + list_data.to_station.station_name;
+                    calendar.Date = list_data.date;
+                    data.Clear();
+                }).AsTask().Wait();
+
+                
+
+                if (list.Count != 0)
+                {
+                    foreach (var info in list)
+                    {
+                        // 使用 Dispatcher 来确保修改 UI 控件的操作在主线程执行
+                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            data.Add(info);
+                        }).AsTask().Wait();
+                    }
+                }
+                else
+                {
+                    // 同样使用 Dispatcher 来更新 UI
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        Debug.WriteLine("No Trains");
+                    }).AsTask().Wait();
+                }
+
+                // 在后台线程处理完毕后关闭加载圈
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    LoadingRing.IsActive = false;
+                    LoadingRing.Visibility = Visibility.Collapsed;
+                }).AsTask().Wait();
+            });
         }
+
+
 
         private void Train_list_ItemClick(object sender, ItemClickEventArgs e)
         {

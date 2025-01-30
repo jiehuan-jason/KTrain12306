@@ -8,27 +8,44 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel HorizontalAlignment="Center">
-        <StackPanel x:Name="head" Orientation="Horizontal">
-            <TextBlock x:Name="title" Text="列车信息" FontSize="70" Margin="10,10,0,0" Height="114" />
+    <StackPanel>
+        <StackPanel x:Name="head" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,10,0">
+            <TextBlock x:Name="title" Text="列车信息" FontSize="70" Margin="10,10,0,0" />
         </StackPanel>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="train_code" FontSize="40" Margin="10,10,10,10"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="from_station_name" FontSize="30" Margin="10,10,10,10" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="time" FontSize="20" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="2" x:Name="to_station_name" FontSize="30" Margin="10,10,10,10" HorizontalAlignment="Right"/>
-        </Grid>
-        <StackPanel>
-            
+        <StackPanel HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="train_code" FontSize="40" Margin="10,10,10,10"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" x:Name="from_station_name" FontSize="30" Margin="10,10,10,10" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="time" FontSize="20" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" x:Name="to_station_name" FontSize="30" Margin="10,10,10,10" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" x:Name="start_time" FontSize="20" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock x:Name="arrive_time" FontSize="20" Margin="10,10,10,10"/>
+                    <TextBlock x:Name="add_day_display" FontSize="12" Margin="-5,0,0,-5"/>
+                </StackPanel>
+            </Grid>
+            <ListView x:Name="PriceList" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,10,10">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:SeatData">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="{Binding name}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                            <TextBlock Text="{Binding price_with_symbol}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                            <TextBlock Text="{Binding num}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
+        
     </StackPanel>
 </Page>

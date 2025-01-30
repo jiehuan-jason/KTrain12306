@@ -88,12 +88,24 @@ namespace KTrain12306
                 case "home":
                     break;
                 case "time":
-                    //TODO
+                    DisplayDialog("暂未完成", "这个页面还没有完成哦");
                     break;
             }
                 
                     
             Debug.WriteLine(click.Name );
+        }
+
+        private async void DisplayDialog(String title, String message)
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = title,
+                Content = message,
+                CloseButtonText = "OK"
+            };
+
+            await dialog.ShowAsync();
         }
 
         private void Menu_Button_Click(object sender, RoutedEventArgs e)
@@ -120,8 +132,8 @@ namespace KTrain12306
         {
             LoadingRing.IsActive = true;
             LoadingRing.Visibility = Visibility.Visible;
-            DateTimeOffset dateTimeOffset = (DateTimeOffset)calendar.Date;
-            TrainsListData list_data = await TrainsListData.init(from_station, to_station, dateTimeOffset.DateTime);
+            DateTime dateTime = ((DateTimeOffset)calendar.Date).DateTime;
+            TrainsListData list_data = await TrainsListData.init(from_station, to_station, dateTime);
             LoadingRing.IsActive = false;
             LoadingRing.Visibility = Visibility.Collapsed;
             if (list_data.trains_list.Count != 0)

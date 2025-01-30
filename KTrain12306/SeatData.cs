@@ -9,6 +9,7 @@ namespace KTrain12306
     class SeatData
     {
         public float price { get; set; }
+        public String price_with_symbol { get; set; }
         public String name { get; set; }
         public String num { get; set; }
 
@@ -110,14 +111,6 @@ namespace KTrain12306
                 data.price = SeatData.ConvertToFloat(listData.yb_price);
                 data.name = "硬包";
                 data.num = tickets_content[27];
-                list.Add(data);
-            }
-             if (!listData.wz_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.wz_price);
-                data.name = "无座";
-                data.num = tickets_content[26];
                 list.Add(data);
             }
              if (!listData.bxyw_num.Equals("-1"))
@@ -224,6 +217,19 @@ namespace KTrain12306
                 data.num = tickets_content[28];
                 list.Add(data);
             }
+            if (!listData.wz_num.Equals("-1"))
+            {
+                SeatData data = new SeatData();
+                data.price = SeatData.ConvertToFloat(listData.wz_price);
+                data.name = "无座";
+                data.num = tickets_content[26];
+                list.Add(data);
+            }
+            for (int i = 0; i< list.Count; i++)
+            {
+                list.ElementAt(i).price_with_symbol = "￥" + list.ElementAt(i).price;
+            }
+
             return list;
 
         }

@@ -39,6 +39,10 @@ namespace KTrain12306
                 from_station_name.Text = info.from_station_name;
                 to_station_name.Text = info.to_station_name;
                 time.Text = info.lishi;
+                start_time.Text = info.start_time;
+                arrive_time.Text = info.arrive_time;
+                add_day_display.Text = info.add_day_display;
+                PriceList.ItemsSource = info.SeatDatas;
             }
 
         }
