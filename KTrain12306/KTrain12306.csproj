@@ -119,23 +119,27 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SaleTimeQueryPage.xaml.cs">
+      <DependentUpon>SaleTimeQueryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeatData.cs" />
-    <Compile Include="StationChoosePage.xaml.cs">
+    <Compile Include="Model\SaleTime.cs" />
+    <Compile Include="Model\SeatData.cs" />
+    <Compile Include="Pages\StationChoosePage.xaml.cs">
       <DependentUpon>StationChoosePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StationInfo.cs" />
-    <Compile Include="StationQueryInfo.cs" />
-    <Compile Include="StationUtils.cs" />
-    <Compile Include="TrainInfo.cs" />
-    <Compile Include="TrainInfoPage.xaml.cs">
+    <Compile Include="Model\StationInfo.cs" />
+    <Compile Include="Util\StationQueryInfo.cs" />
+    <Compile Include="Util\StationUtils.cs" />
+    <Compile Include="Model\TrainInfo.cs" />
+    <Compile Include="Pages\TrainInfoPage.xaml.cs">
       <DependentUpon>TrainInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TrainsListData.cs" />
-    <Compile Include="TrainsListPage.xaml.cs">
+    <Compile Include="Model\TrainsListData.cs" />
+    <Compile Include="Pages\TrainsListPage.xaml.cs">
       <DependentUpon>TrainsListPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -198,19 +202,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="StationChoosePage.xaml">
+    <Page Include="Pages\SaleTimeQueryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TrainInfoPage.xaml">
+    <Page Include="Pages\StationChoosePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TrainsListPage.xaml">
+    <Page Include="Pages\TrainInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TrainsListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,6 +231,7 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

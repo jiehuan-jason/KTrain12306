@@ -12,7 +12,8 @@ namespace KTrain12306
         public enum query_label
         {
             From,
-            To
+            To,
+            None
         }
         public query_label status;
         public StationQueryInfo(StationInfo info,query_label status)

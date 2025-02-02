@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KTrain12306.Pages;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -55,7 +56,24 @@ namespace KTrain12306
 
         private void Station_list_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage), new StationQueryInfo((StationInfo)e.ClickedItem, label));
+            
+
+            var backStack = Frame.BackStack;
+            if (backStack.Count > 0)
+            {
+                var lastEntry = backStack.Last();
+                var previousPageType = lastEntry.SourcePageType;
+
+                if (previousPageType == typeof(MainPage))
+                {
+                    Frame.Navigate(typeof(MainPage), new StationQueryInfo((StationInfo)e.ClickedItem, label));
+                }
+                else if (previousPageType == typeof(SaleTimeQueryPage))
+                {
+                    Frame.Navigate(typeof(SaleTimeQueryPage), new StationQueryInfo((StationInfo)e.ClickedItem, label));
+                }
+            }
+
         }
 
         private async void Submit_Click(object sender, RoutedEventArgs e)

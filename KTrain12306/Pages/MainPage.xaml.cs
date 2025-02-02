@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using KTrain12306.Pages;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -88,7 +89,7 @@ namespace KTrain12306
                 case "home":
                     break;
                 case "time":
-                    DisplayDialog("暂未完成", "这个页面还没有完成哦");
+                    Frame.Navigate(typeof(SaleTimeQueryPage));
                     break;
             }
                 
@@ -108,11 +109,6 @@ namespace KTrain12306
             await dialog.ShowAsync();
         }
 
-        private void Menu_Button_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
         private void From_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(StationChoosePage),StationQueryInfo.query_label.From);
@@ -120,7 +116,11 @@ namespace KTrain12306
 
         private void Change_Click(object sender, RoutedEventArgs e)
         {
-
+            var tmp_station = from_station;
+            from_station = to_station;
+            to_station = tmp_station;
+            from.Content = from_station.station_name;
+            to.Content = to_station.station_name;
         }
 
         private void To_Click(object sender, RoutedEventArgs e)
@@ -144,51 +144,21 @@ namespace KTrain12306
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter.GetType().Equals(typeof(StationQueryInfo))){
-                StationQueryInfo info = (StationQueryInfo) e.Parameter;
-                if (info.status.Equals(StationQueryInfo.query_label.From)) {
-                    from_station = info.station_info;
-                    from.Content = from_station.station_name;
-                }
-                else
-                {
-                    to_station = info.station_info;
-                    to.Content = to_station.station_name;
+            if (e.Parameter != null) { 
+                if (e.Parameter.GetType().Equals(typeof(StationQueryInfo))) {
+                    StationQueryInfo info = (StationQueryInfo)e.Parameter;
+                    if (info.status.Equals(StationQueryInfo.query_label.From)) {
+                        from_station = info.station_info;
+                        from.Content = from_station.station_name;
+                    }
+                    else
+                    {
+                        to_station = info.station_info;
+                        to.Content = to_station.station_name;
+                    }
                 }
             }
         }
-        /*private void WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
-{
-if (args.IsSuccess)
-{
-// 页面加载成功，执行下一步操作
-// 在此处添加加载完成后的操作逻辑
-System.Diagnostics.Debug.WriteLine("页面加载完成！");
-if (webview.Source.AbsoluteUri.StartsWith("https://kyfw.12306.cn/otn/leftTicket/init"))
-{
-webview.Source = new Uri("https://kyfw.12306.cn/otn/leftTicket/queryO?leftTicketDTO.train_date=2024-12-02&leftTicketDTO.from_station=HGH&leftTicketDTO.to_station=NGH&purpose_codes=ADULT");
-button.Visibility = Visibility.Visible;
-LoadingRing.IsActive = false;
-LoadingRing.Visibility = Visibility.Collapsed;
-}
-ExecuteNextStep();
-}
-else
-{
-// 页面加载失败，进行错误处理
-System.Diagnostics.Debug.WriteLine("页面加载失败！");
-}
-}
-
-
-
-private async void ExecuteNextStep()
-{
-// 在这里执行你的后续操作，例如解析页面内容、显示按钮等
-// 例如显示一个提示框，表示操作完成
-content = await webview.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML" });
-isContent = true;
-}*/
         public static CalendarDatePicker setDatePickerRange(CalendarDatePicker calendarDatePicker)
         {
             calendarDatePicker.MinDate = DateTime.Now;
