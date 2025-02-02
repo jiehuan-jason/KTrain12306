@@ -71,8 +71,15 @@ namespace KTrain12306
                                 if (itemWithNewAPI != null)
                                 {
                                     info.SeatDatas = SeatData.GetSeatDatas(info, itemWithNewAPI);
-                                    
-
+                                    if (itemWithNewAPI[1].Equals("预定"))
+                                    {
+                                        info.isBeginSale = true;
+                                    }
+                                    else
+                                    {
+                                        info.isBeginSale = false;
+                                        info.remark = itemWithNewAPI[1];
+                                    }
                                     result.Add(info);
                                 }
                                 

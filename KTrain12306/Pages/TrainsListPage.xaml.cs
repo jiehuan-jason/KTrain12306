@@ -36,6 +36,28 @@ namespace KTrain12306
             throw new NotImplementedException();
         }
     }
+    public class RemarkToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            // 1. 类型验证
+            if (value is String)
+            {
+                String remark = (String)value;
+                // 2. 字符串比较（忽略大小写）
+                bool isMatch = string.Equals(remark, "预订", StringComparison.OrdinalIgnoreCase);
+
+                // 3. 返回可见性结果
+                return isMatch ? Visibility.Collapsed : Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException(); // 单向绑定无需反向转换
+        }
+    }
     public class ListNameItemConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
