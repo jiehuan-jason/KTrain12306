@@ -133,13 +133,22 @@ namespace KTrain12306
             LoadingRing.IsActive = true;
             LoadingRing.Visibility = Visibility.Visible;
             DateTime dateTime = ((DateTimeOffset)calendar.Date).DateTime;
-            TrainsListData list_data = await TrainsListData.init(from_station, to_station, dateTime);
-            LoadingRing.IsActive = false;
-            LoadingRing.Visibility = Visibility.Collapsed;
-            if (list_data.trains_list.Count != 0)
-                Frame.Navigate(typeof(TrainsListPage), list_data);
-            else
-                ShowNoTrainsDialog();
+            TrainsListData list_data = null;
+
+            await Task.Run(async () =>
+            {
+                list_data = await TrainsListData.init(from_station, to_station, dateTime);
+            });
+
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                LoadingRing.IsActive = false;
+                LoadingRing.Visibility = Visibility.Collapsed;
+                if (list_data.trains_list.Count != 0)
+                    Frame.Navigate(typeof(TrainsListPage), list_data);
+                else
+                    ShowNoTrainsDialog();
+            });
 
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)

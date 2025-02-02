@@ -37,11 +37,16 @@
             <ListView x:Name="PriceList" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,10,10">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:SeatData">
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock Text="{Binding name}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,10,0"/>
-                            <TextBlock Text="{Binding price_with_symbol}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0"/>
-                            <TextBlock Text="{Binding num}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding name}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding price_with_symbol}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                            <TextBlock Grid.Column="2" Text="{Binding num}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -76,6 +76,8 @@ namespace KTrain12306
         public string edrz_price { get; set; }
         public string wz_price { get; set; }
         public string add_day_display { get; set; }
+        public string remark { get; set; } = "";
+        public bool isBeginSale { get; set; }
 
         public List<SeatData> SeatDatas { set; get; }
 

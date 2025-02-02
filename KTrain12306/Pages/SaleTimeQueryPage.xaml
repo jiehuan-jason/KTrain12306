@@ -56,10 +56,14 @@
             <ListView x:Name="TimeList" HorizontalAlignment="Center" VerticalAlignment="Stretch" SelectionMode="None" IsItemClickEnabled="False" Margin="10,10,10,10" Grid.Row="2">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:SaleTime">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="15" Text="{Binding name}" Margin="0,0,10,0" />
-                            <TextBlock FontSize="15" Text="{Binding value}" Margin="10,0,0,0" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontSize="15" Text="{Binding name}" Margin="10,0,10,0" />
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="15" Text="{Binding value}" Margin="10,0,10,0" />
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -67,10 +67,12 @@ namespace KTrain12306
                         {
                             if (TimeSpan.Parse(info.start_time) > DateTime.Now.TimeOfDay)
                             {
-                                string[] new_obj = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
-                                if (new_obj != null)
+                                string[] itemWithNewAPI = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
+                                if (itemWithNewAPI != null)
                                 {
-                                    info.SeatDatas = SeatData.GetSeatDatas(info, new_obj);
+                                    info.SeatDatas = SeatData.GetSeatDatas(info, itemWithNewAPI);
+                                    
+
                                     result.Add(info);
                                 }
                                 
@@ -78,8 +80,17 @@ namespace KTrain12306
                         }
                         else
                         {
-                            string[] new_obj = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
-                            info.SeatDatas = SeatData.GetSeatDatas(info, new_obj);
+                            string[] itemWithNewAPI = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
+                            info.SeatDatas = SeatData.GetSeatDatas(info, itemWithNewAPI);
+                            if (itemWithNewAPI[1].Equals("预定"))
+                            {
+                                info.isBeginSale = true;
+                            }
+                            else
+                            {
+                                info.isBeginSale = false;
+                                info.remark = itemWithNewAPI[1];
+                            }
                             result.Add(info);
                         }
                             

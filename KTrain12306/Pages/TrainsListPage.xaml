@@ -122,18 +122,15 @@
                             <TextBlock Text="{x:Bind SeatDatas, Converter={StaticResource ListTicketsItemConverter}, ConverterParameter=6}" FontSize="12" />
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal"
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal">
+                            <TextBlock Text="{Binding remark}" FontSize="12" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal"
             Visibility="{x:Bind SeatDatas, Converter={StaticResource ListIndexExistsConverter}, ConverterParameter=7}">
                             <TextBlock Text="{x:Bind SeatDatas, Converter={StaticResource ListNameItemConverter}, ConverterParameter=7}" FontSize="12" />
                             <TextBlock Text=":" FontSize="12"/>
                             <TextBlock Text="{x:Bind SeatDatas, Converter={StaticResource ListTicketsItemConverter}, ConverterParameter=7}" FontSize="12" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal"
-            Visibility="{x:Bind SeatDatas, Converter={StaticResource ListIndexExistsConverter}, ConverterParameter=8}">
-                            <TextBlock Text="{x:Bind SeatDatas, Converter={StaticResource ListNameItemConverter}, ConverterParameter=8}" FontSize="12" />
-                            <TextBlock Text=":" FontSize="12"/>
-                            <TextBlock Text="{x:Bind SeatDatas, Converter={StaticResource ListTicketsItemConverter}, ConverterParameter=8}" FontSize="12" />
                         </StackPanel>
 
                     </Grid>
