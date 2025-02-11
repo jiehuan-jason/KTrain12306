@@ -34,7 +34,7 @@ namespace KTrain12306
             String content;
             try
             {
-                content = await getDataFromWebAsync();
+                content = await getDataFromWebAsync("https://kyfw.12306.cn/otn/leftTicketPrice/query?leftTicketDTO.train_date=" + date.ToString("yyyy-MM-dd") + "&leftTicketDTO.from_station=" + from_station.station_telecode + "&leftTicketDTO.to_station=" + to_station.station_telecode + "&leftTicketDTO.ticket_type=1&randCode=");
 
                 var jsonObj = JObject.Parse(content);
                 var dataArray = jsonObj["data"] as JArray;
@@ -80,6 +80,7 @@ namespace KTrain12306
                                         info.isBeginSale = false;
                                         info.remark = itemWithNewAPI[1];
                                     }
+                                    info.date = date;
                                     result.Add(info);
                                 }
                                 
@@ -98,6 +99,7 @@ namespace KTrain12306
                                 info.isBeginSale = false;
                                 info.remark = itemWithNewAPI[1];
                             }
+                            info.date = date;
                             result.Add(info);
                         }
                             
@@ -113,7 +115,7 @@ namespace KTrain12306
             }
         }
         
-        private async Task<string> getDataFromWebAsync()
+        static public async Task<string> getDataFromWebAsync(String url)
         {
             //Create an HTTP client object
             Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
@@ -135,7 +137,7 @@ namespace KTrain12306
                 throw new Exception("Invalid header value: " + header);
             }
 
-            Uri requestUri = new Uri("https://kyfw.12306.cn/otn/leftTicketPrice/query?leftTicketDTO.train_date=" + date.ToString("yyyy-MM-dd") + "&leftTicketDTO.from_station=" + from_station.station_telecode + "&leftTicketDTO.to_station=" + to_station.station_telecode + "&leftTicketDTO.ticket_type=1&randCode=");
+            Uri requestUri = new Uri(url); 
 
             //Send the GET request asynchronously and retrieve the response as a string.
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();

@@ -56,10 +56,10 @@ namespace KTrain12306.Pages
                     break;
                 case "time":
                     break;
+                case "about":
+                    Frame.Navigate(typeof(AboutPage));
+                    break;
             }
-
-
-            Debug.WriteLine(click.Name);
         }
 
         async private void Search_Click(object sender, RoutedEventArgs e)

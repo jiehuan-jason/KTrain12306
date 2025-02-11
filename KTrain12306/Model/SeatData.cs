@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KTrain12306
 {     
-    class SeatData
+    public class SeatData
     {
         public float price { get; set; }
         public String price_with_symbol { get; set; }

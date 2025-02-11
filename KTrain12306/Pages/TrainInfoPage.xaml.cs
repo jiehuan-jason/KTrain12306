@@ -1,4 +1,7 @@
-﻿using System;
+﻿using KTrain12306.Model;
+using KTrain12306.Pages;
+using KTrain12306.Util;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -34,7 +37,7 @@ namespace KTrain12306
             {
                 info = (TrainInfo)e.Parameter;
 
-                train_code.Text = info.station_train_code;
+                train_code.Content = info.station_train_code;
 
                 from_station_name.Text = info.from_station_name;
                 to_station_name.Text = info.to_station_name;
@@ -44,6 +47,14 @@ namespace KTrain12306
                 add_day_display.Text = info.add_day_display;
                 PriceList.ItemsSource = info.SeatDatas;
             }
+
+        }
+
+        async private void Train_code_Click(object sender, RoutedEventArgs e)
+        {
+            var trains = await TrainPassInfoUtil.SearchAndBackTrainPassInfos(info.station_train_code,info.date);
+            var train = trains.FirstOrDefault(item => item.station_train_code == info.station_train_code);
+            Frame.Navigate(typeof(TrainStationsPage), train);
 
         }
     }

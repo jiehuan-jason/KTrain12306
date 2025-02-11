@@ -107,9 +107,12 @@ namespace KTrain12306
         StationInfo from_station;
         StationInfo to_station;
 
+        DateTime date;
+
         public TrainsListPage()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
             train_list.ItemsSource = data;
             MainPage.setDatePickerRange(calendar);
             from_station = new StationInfo("bji|北京|BJP|beijing|bj|2|0357|北京|||");
@@ -118,12 +121,14 @@ namespace KTrain12306
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if(e.Parameter is TrainsListData)
+            if(e.NavigationMode == NavigationMode.New && e.Parameter is TrainsListData)
             {
                 TrainsListData list_data = (TrainsListData)e.Parameter;
                 
                 from_station = list_data.from_station;
                 to_station = list_data.to_station;
+
+                date = list_data.date;
                 refresh(list_data);
             }
             else
@@ -136,6 +141,7 @@ namespace KTrain12306
         private async void Search_Click(object sender, RoutedEventArgs e)
         {
             var list_data = await TrainsListData.init(from_station, to_station, calendar.Date.Value.DateTime);
+            date = calendar.Date.Value.DateTime;
             refresh(list_data);
         }
 
@@ -153,7 +159,7 @@ namespace KTrain12306
                 Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     title.Text = list_data.from_station.station_name + "-" + list_data.to_station.station_name;
-                    calendar.Date = list_data.date;
+                    calendar.Date = date;
                     data.Clear();
                 }).AsTask().Wait();
 

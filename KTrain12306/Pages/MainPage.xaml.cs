@@ -91,6 +91,9 @@ namespace KTrain12306
                 case "time":
                     Frame.Navigate(typeof(SaleTimeQueryPage));
                     break;
+                case "about":
+                    Frame.Navigate(typeof(AboutPage));
+                    break;
             }
                 
                     

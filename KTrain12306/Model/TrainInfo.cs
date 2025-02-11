@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace KTrain12306
 {
-    class TrainInfo
+    public class TrainInfo
     {
+        public DateTime date { get; set; }
         public String station_train_code { get; set; }
         public String start_station_telecode { get; set; }
         public String end_station_telecode { get; set; }

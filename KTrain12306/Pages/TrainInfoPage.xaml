@@ -5,12 +5,13 @@
     xmlns:local="using:KTrain12306"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local1="using:KTrain12306.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel>
         <StackPanel x:Name="head" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,10,0">
-            <TextBlock x:Name="title" Text="列车信息" FontSize="70" Margin="10,10,0,0" />
+            <TextBlock x:Name="title" Text="售票信息" FontSize="70" Margin="10,10,0,0" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Center">
             <Grid>
@@ -24,7 +25,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="train_code" FontSize="40" Margin="10,10,10,10"/>
+                <Button Grid.Row="0" Grid.Column="1" x:Name="train_code" FontSize="40" Margin="10,10,10,10" Background="Transparent" Click="Train_code_Click"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" x:Name="from_station_name" FontSize="30" Margin="10,10,10,10" HorizontalAlignment="Left"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="time" FontSize="20" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="2" x:Name="to_station_name" FontSize="30" Margin="10,10,10,10" HorizontalAlignment="Right"/>
@@ -50,7 +51,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
         </StackPanel>
-        
     </StackPanel>
 </Page>
