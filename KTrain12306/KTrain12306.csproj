@@ -146,6 +146,7 @@
       <DependentUpon>StationChoosePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\StationInfo.cs" />
+    <Compile Include="Util\Converters.cs" />
     <Compile Include="Util\StationQueryInfo.cs" />
     <Compile Include="Util\StationUtils.cs" />
     <Compile Include="Model\TrainInfo.cs" />
@@ -164,6 +165,11 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />

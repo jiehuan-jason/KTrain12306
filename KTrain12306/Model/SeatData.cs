@@ -73,10 +73,10 @@ namespace KTrain12306
                 data.num = tickets_content[32];
                 list.Add(data);
             }
-             if (!listData.srrb_num.Equals("-1"))
+             if (!listData.dw_num.Equals("-1"))
             {
                 SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.srrb_price);
+                data.price = SeatData.ConvertToFloat(listData.dw_price);
                 data.name = "动卧";
                 data.num = tickets_content[23];
                 list.Add(data);
@@ -113,62 +113,6 @@ namespace KTrain12306
                 data.num = tickets_content[27];
                 list.Add(data);
             }
-             if (!listData.bxyw_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.bxyw_price);
-                data.name = "包厢硬卧";
-                data.num = tickets_content[27];
-                list.Add(data);
-            }
-             if (!listData.hbyz_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.hbyz_price);
-                data.name = "混编硬座";
-                data.num = listData.hbyz_num;
-                list.Add(data);
-            }
-             if (!listData.hbyw_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.hbyw_price);
-                data.name = "混编硬卧";
-                data.num = listData.hbyw_num;
-                list.Add(data);
-            }
-             if (!listData.bxrz_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.bxrz_price);
-                data.name = "优选一等";
-                data.num = tickets_content[20];
-                list.Add(data);
-            }
-             if (!listData.tdrz_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.tdrz_price);
-                data.name = "特等软座";
-                data.num = tickets_content[25];
-                list.Add(data);
-            }
-             if (!listData.errb_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.errb_price);
-                data.name = "二人软包";
-                data.num = listData.errb_num;
-                list.Add(data);
-            }
-             if (!listData.yrrb_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.yrrb_price);
-                data.name = "一人软包";
-                data.num = tickets_content[22];
-                list.Add(data);
-            }
              if (!listData.ydrz_num.Equals("-1"))
             {
                 SeatData data = new SeatData();
@@ -185,34 +129,19 @@ namespace KTrain12306
                 data.num = tickets_content[30];
                 list.Add(data);
             }
-             if (!listData.hbrz_num.Equals("-1"))
+             
+             if (!listData.ydrw_num.Equals("-1"))
             {
                 SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.hbrz_price);
-                data.name = "混编软座";
-                data.num = listData.hbrz_num;
-                list.Add(data);
-            }
-             if (!listData.hbrw_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.hbrw_price);
-                data.name = "混编软卧";
-                data.num = listData.hbrw_num;
-                list.Add(data);
-            }
-             if (!listData.ydsr_num.Equals("-1"))
-            {
-                SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.ydsr_price);
+                data.price = SeatData.ConvertToFloat(listData.ydrw_price);
                 data.name = "一等软卧";
                 data.num = tickets_content[23];
                 list.Add(data);
             }
-             if (!listData.edsr_num.Equals("-1"))
+             if (!listData.edrw_num.Equals("-1"))
             {
                 SeatData data = new SeatData();
-                data.price = SeatData.ConvertToFloat(listData.edsr_price);
+                data.price = SeatData.ConvertToFloat(listData.edrw_price);
                 data.name = "二等软卧";
                 data.num = tickets_content[28];
                 list.Add(data);

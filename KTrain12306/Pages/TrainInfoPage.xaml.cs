@@ -37,13 +37,13 @@ namespace KTrain12306
             {
                 info = (TrainInfo)e.Parameter;
 
-                train_code.Content = info.station_train_code;
+                train_code.Content = info.StationTrainCode;
 
                 from_station_name.Text = info.from_station_name;
                 to_station_name.Text = info.to_station_name;
                 time.Text = info.lishi;
-                start_time.Text = info.start_time;
-                arrive_time.Text = info.arrive_time;
+                start_time.Text = info.StartTime;
+                arrive_time.Text = info.ArriveTime;
                 add_day_display.Text = info.add_day_display;
                 PriceList.ItemsSource = info.SeatDatas;
             }
@@ -52,8 +52,8 @@ namespace KTrain12306
 
         async private void Train_code_Click(object sender, RoutedEventArgs e)
         {
-            var trains = await TrainPassInfoUtil.SearchAndBackTrainPassInfos(info.station_train_code,info.date);
-            var train = trains.FirstOrDefault(item => item.station_train_code == info.station_train_code);
+            var trains = await TrainPassInfoUtil.SearchAndBackTrainPassInfos(info.StationTrainCode,info.date);
+            var train = trains.FirstOrDefault(item => item.station_train_code == info.StationTrainCode);
             Frame.Navigate(typeof(TrainStationsPage), train);
 
         }

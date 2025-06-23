@@ -34,10 +34,6 @@ namespace KTrain12306
             String content;
             try
             {
-                content = await getDataFromWebAsync("https://kyfw.12306.cn/otn/leftTicketPrice/query?leftTicketDTO.train_date=" + date.ToString("yyyy-MM-dd") + "&leftTicketDTO.from_station=" + from_station.station_telecode + "&leftTicketDTO.to_station=" + to_station.station_telecode + "&leftTicketDTO.ticket_type=1&randCode=");
-
-                var jsonObj = JObject.Parse(content);
-                var dataArray = jsonObj["data"] as JArray;
 
                 var result = new List<TrainInfo>();
 
@@ -55,32 +51,18 @@ namespace KTrain12306
                     resultAfterSplit.Add(split);
                 }
                 // 遍历 data 数组
-                foreach (var item in dataArray)
+                foreach (var item in newResult)
                 {
-                    var queryLeftNewDTO = item["queryLeftNewDTO"];
-                    if (queryLeftNewDTO != null)
-                    {
-                        var info = TrainInfo.GetTrainInfo(queryLeftNewDTO.ToString());
-
-
+                    var info = new TrainInfo(item, date);
+                    await info.initStationsName();
                         if (date.Date == DateTime.Today)
                         {
-                            if (TimeSpan.Parse(info.start_time) > DateTime.Now.TimeOfDay)
+                            if (TimeSpan.Parse(info.StartTime) > DateTime.Now.TimeOfDay)
                             {
-                                string[] itemWithNewAPI = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
+                                string[] itemWithNewAPI = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.StationTrainCode);
                                 if (itemWithNewAPI != null)
                                 {
                                     info.SeatDatas = SeatData.GetSeatDatas(info, itemWithNewAPI);
-                                    if (itemWithNewAPI[1].Equals("预定"))
-                                    {
-                                        info.isBeginSale = true;
-                                    }
-                                    else
-                                    {
-                                        info.isBeginSale = false;
-                                        info.remark = itemWithNewAPI[1];
-                                    }
-                                    info.date = date;
                                     result.Add(info);
                                 }
                                 
@@ -88,24 +70,13 @@ namespace KTrain12306
                         }
                         else
                         {
-                            string[] itemWithNewAPI = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.station_train_code);
+                            string[] itemWithNewAPI = resultAfterSplit.FirstOrDefault(item_in_split => item_in_split.Length > 3 && item_in_split[3] == info.StationTrainCode);
                             info.SeatDatas = SeatData.GetSeatDatas(info, itemWithNewAPI);
-                            if (itemWithNewAPI[1].Equals("预定"))
-                            {
-                                info.isBeginSale = true;
-                            }
-                            else
-                            {
-                                info.isBeginSale = false;
-                                info.remark = itemWithNewAPI[1];
-                            }
-                            info.date = date;
                             result.Add(info);
                         }
                             
 
                     }
-                }
                 return result;
             }
             catch (Exception ex)

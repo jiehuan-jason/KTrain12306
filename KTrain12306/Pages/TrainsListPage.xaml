@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KTrain12306"
+    xmlns:localutils="using:KTrain12306.Util"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -12,6 +13,7 @@
         <local:ListTicketsItemConverter x:Key="ListTicketsItemConverter" />
         <local:ListIndexExistsConverter x:Key="ListIndexExistsConverter" />
         <local:RemarkToVisibilityConverter x:Key="RemarkConverter"/>
+        <localutils:ListViewWidthToItemWidthConverter x:Key="ListViewWidthToItemWidthConverter"/>
     </Page.Resources>
     <Grid Margin="0,10,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -20,6 +22,54 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="itemsWrapGrid.ItemWidth" Value="{Binding ElementName=train_list, Path=ActualWidth, Converter={StaticResource ListViewWidthToItemWidthConverter}, ConverterParameter=1}"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="itemsWrapGrid.ItemWidth" Value="{Binding ElementName=train_list, Path=ActualWidth, Converter={StaticResource ListViewWidthToItemWidthConverter}, ConverterParameter=2}"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="itemsWrapGrid.ItemWidth" Value="{Binding ElementName=train_list, Path=ActualWidth, Converter={StaticResource ListViewWidthToItemWidthConverter}, ConverterParameter=3}"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="itemsWrapGrid.ItemWidth" Value="{Binding ElementName=train_list, Path=ActualWidth, Converter={StaticResource ListViewWidthToItemWidthConverter}, ConverterParameter=4}"/>                    
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="2000" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="itemsWrapGrid.ItemWidth" Value="{Binding ElementName=train_list, Path=ActualWidth, Converter={StaticResource ListViewWidthToItemWidthConverter}, ConverterParameter=5}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Margin="0,0,0,10">
             <TextBlock x:Name="title" Text="" FontSize="40" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -33,17 +83,29 @@
                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <ListView x:Name="train_list" Grid.Row="3" HorizontalAlignment="Center" SelectionMode="Single" IsItemClickEnabled="True"
-                   Margin="10,10,0,0" ItemClick="Train_list_ItemClick">
+        <ListView x:Name="train_list" Grid.Row="3" SelectionMode="Single" IsItemClickEnabled="True"
+                   Margin="10,10,10,0" ItemClick="Train_list_ItemClick" HorizontalAlignment="Center">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Width" Value="310"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+           <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid x:Name="itemsWrapGrid" Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:TrainInfo">
-                    <Grid HorizontalAlignment="Center" Width="300">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
                             <!-- 动态伸缩 -->
-                            <ColumnDefinition  />
+                            <ColumnDefinition Width="*" />
                             <!-- 动态伸缩 -->
-                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="*"/>
                             <!-- 动态伸缩 -->
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -54,11 +116,11 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding station_train_code}" FontSize="20" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding StationTrainCode}" FontSize="20" />
 
                         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment ="Left" >
                             <TextBlock Text="{Binding from_station_name}" FontSize="17"/>
-                            <TextBlock Text="{Binding start_time}" />
+                            <TextBlock Text="{Binding StartTime}" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
                             <TextBlock Text="{Binding lishi}" />
@@ -66,7 +128,7 @@
                         <StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right">
                             <TextBlock Text="{Binding to_station_name}" HorizontalAlignment="Right" FontSize="17"/>
                             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding arrive_time}" />
+                                <TextBlock Text="{Binding ArriveTime}" />
                                 <TextBlock Text="{Binding add_day_display}" FontSize="9"/>
                             </StackPanel>
 
