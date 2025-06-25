@@ -47,19 +47,19 @@
                 <TextBlock x:Name="title" Text="关于" FontSize="60" Margin="10,0,0,0" VerticalAlignment="Center" />
             </StackPanel>
             <StackPanel x:Name="AppInfo">
-                <TextBlock Margin="15,10,0,0" FontSize="20" Text="软件信息"/>
-                <TextBlock Margin="15,5,0,0" FontSize="15" Text="版本 V1.0.2"/>
-                <TextBlock Margin="15,5,0,0" FontSize="15" Text="更新内容："/>
-                <TextBlock Margin="18,5,10,0" TextWrapping="Wrap" FontSize="15" Text="添加了车次查询，在票价界面点击车次即可查看该车次所有站点以及到发时间"/>
+                <TextBlock Margin="15,10,10,0" FontSize="20" Text="软件信息"/>
+                <TextBlock Margin="15,5,10,0" FontSize="15" Text="版本 V1.0.3"/>
+                <TextBlock Margin="15,5,10,0" FontSize="15" Text="更新内容："/>
+                <TextBlock Margin="20,5,10,0" TextWrapping="Wrap" FontSize="15" Text="修复了API问题，修改了部分UI使其适应于PC环境"/>
             </StackPanel>
             <StackPanel x:Name="AuthorInfo">
-                <TextBlock Margin="15,10,0,0" FontSize="20" Text="作者信息"/>
-                <TextBlock Margin="15,5,0,0" FontSize="15" Text="作者：jiehuan"/>
-                <TextBlock Margin="15,5,0,0" FontSize="15" Text="联系信息"/>
-                <TextBlock Margin="18,5,10,0" FontSize="15" Text="邮箱：jiehuan233@outlook.com"/>
-                <HyperlinkButton Margin="18,5,10,0" FontSize="13" Content="访问软件dospy地址" NavigateUri="https://www.dospy.wang/thread-23290-1-1.html"/>
-                <HyperlinkButton Margin="18,-5,10,0" FontSize="13" Content="访问软件Github地址" NavigateUri="https://github.com/jiehuan-jason/KTrain12306"/>
-                <TextBlock Margin="15,5,0,0" FontSize="12" Text="©2025 jiehuan and Project Kinsler." />
+                <TextBlock Margin="15,10,10,0" FontSize="20" Text="作者信息"/>
+                <TextBlock Margin="15,5,10,0" FontSize="15" Text="作者：jiehuan"/>
+                <TextBlock Margin="15,5,10,0" FontSize="15" Text="联系信息"/>
+                <TextBlock Margin="20,5,10,0" FontSize="15" Text="邮箱：jiehuan233@outlook.com"/>
+                <HyperlinkButton Margin="15,5,10,0" FontSize="13" Content="访问软件dospy地址" NavigateUri="https://www.dospy.wang/thread-23290-1-1.html"/>
+                <HyperlinkButton Margin="15,-5,10,0" FontSize="13" Content="访问软件Github地址" NavigateUri="https://github.com/jiehuan-jason/KTrain12306"/>
+                <TextBlock Margin="15,5,10,0" FontSize="12" Text="©2025 jiehuan and Project Kinsler." />
             </StackPanel>
         </StackPanel>
 
